@@ -91,13 +91,9 @@ public class Game {
         
         //char index;
         while(turn) {
-            // Check if game should be fished
-            //
+            // TODO: Check if game should be finished
+    
 
-
-            // TODO: Need to add a constraint so the same numbers cannot be entered. 
-
-            // Print out possible moves (Array of letters.)
 
             String cell;
             cell = input.stringMoveInput("Where do you want to play?: ");       
@@ -106,16 +102,23 @@ public class Game {
             
             // Find board row & column of letter given by input
             String s = sArray[0];
-            letterPosition(s.charAt(0));
+            letterPosition(s.charAt(0)); // This sets row & columns values
      
             // Convert given value of input from String to Integer
             int value;
             value = Integer.parseInt(String.valueOf(sArray[1]));
 
             // Perform the move
-            if()
-            move(this.row, this.column, value);
-            checkBoardState();
+            
+            // TODO: Need to add a constraint so the same numbers cannot be entered. 
+
+            if(isFree()) {
+                move(this.row, this.column, value);
+                checkBoardState();
+            } else {
+                System.out.println("That cell is not free.");
+            }
+            
 
             // Change player - turn is over!
             turn = false;
@@ -128,12 +131,12 @@ public class Game {
      * @param cell the number of the cell
      * @return true if the cell is currently unoccupied
      */
-    public boolean isFree(int cell) {
-        return (board[(cell-1)/3][(cell-1)%3] == isEmpty());
+    public boolean isFree(this.row, this.column) {
+        return (board[row][column].isEmpty() == true);
     }
 
 }
-
+/*
             do {
                 System.out.print("Where do you want to play? ");
                 cell = input.nextInt();
@@ -143,7 +146,7 @@ public class Game {
                     System.out.println("That cell is not free.");
             } while ((cell < 1) || (cell > 9) || !board.isFree(cell));
     
-
+*/
     
     /**
      * Handle user input (regardless of upper or lower case)
