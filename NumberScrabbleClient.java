@@ -63,25 +63,23 @@ public class NumberScrabbleClient {
      */
     public static void main(String[] args) {
         init(); 
-
+        
+        // Print initial board
+        System.out.println("Current board state.");
+        System.out.println(board);
+            
         while(!board.gameIsFinished) {
-            System.out.println("Current board state.");
-            System.out.println(board);
-            
-            String cell;
-            char c;
-            
             for(Player player : players){
-                
                 System.out.println("It is " + player.name() + "'s turn.");
                 board.turn();
                 System.out.println(board);                
 
                 if(board.gameIsFinished){
                     // change message if draw
+                    
                     System.out.println("The game has ended.");
                     System.out.println("Congratulations to the winner: " + player.name());
-                    break;
+                    break; 
                 }
             }           
         }

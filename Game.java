@@ -17,7 +17,6 @@ public class Game {
     private InputManager input;
     private int row, column;
 
-
     /**
      * Constructor that creates an empty board.
      */
@@ -61,104 +60,73 @@ public class Game {
     }
 
     /**
-     * Checks if a given cell is free.
-     * <b>Precondition:</b> 1&le;cell&le;9.
-     * @param   cell   the String of the cell
-     * @return         true if the cell is currently unoccupied
-     */
-    public boolean isFree(String cell) {
-        return true;
-    }
-
-    /**
-     * Checks which cells are free
-     * <b>Precondition:</b> 1&le;cell&le;9.
-     * @param   cell   the String of the cell
-     * @return         returns the available cells  
-     */
-    public void showFreeCells() {
-        // TODO
-    }
-
-    /**
      * Prompt player for their move. 
      */
     public void turn() {
-        //Scanner input = new Scanner(System.in); // Should this be here??
         turn = true;
 
-        
-        
         //char index;
-        while(turn) {
-            // TODO: Check if game should be finished
-    
+        while(turn) {                
+            String position;
+            String number;
+            do {
+                // Validate input
+                String[] sArray = input.stringMoveInput("Where do you want to play?: "); 
+                position = sArray[0];
+                number = sArray[1];
 
+                // Find board row & column of letter given by input
+                String s = sArray[0];
+                letterPosition(s.charAt(0)); // This sets row & columns values
 
-            String cell;
-            cell = input.stringMoveInput("Where do you want to play?: ");       
-            String[] sArray = cell.split("");  
-            System.out.println();
-            
-            // Find board row & column of letter given by input
-            String s = sArray[0];
-            letterPosition(s.charAt(0)); // This sets row & columns values
-     
-            // Convert given value of input from String to Integer
-            int value;
-            value = Integer.parseInt(String.valueOf(sArray[1]));
+                int value;
+                value = Integer.parseInt(String.valueOf(sArray[1]));
 
-            // Perform the move
-            
-            // TODO: Need to add a constraint so the same numbers cannot be entered. 
+                // Check conditions for input
+                if (isNumberUsed(value)) {
+                    System.out.println("That number has already been used.");
+                } else if (!isCellFree()){
+                    System.out.println("That cell is not available.");
+                } else {
+                    move(value);
+                    checkBoardState();
 
-            if(isFree()) {
-                move(this.row, this.column, value);
-                checkBoardState();
-            } else {
-                System.out.println("That cell is not free.");
-            }
-            
-
-            // Change player - turn is over!
-            turn = false;
-        }
+                    // Change player - turn is over!
+                    turn = false;
+                }       
+            } while (turn);
+        } 
     }
 
-       /**
+    /**
+     * Returns if number has already been used or not. 
+     */
+    public boolean isNumberUsed(int value) {
+        boolean isCellValueEqual = false;
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) { 
+                if (board[i][j].value() == value) {
+                    isCellValueEqual = true;
+                }
+            }
+        }
+        return isCellValueEqual;
+    }
+
+    /**
      * Checks whether a given cell is free.<br>
      * <b>Precondition:</b> 1&le;cell&le;9.
      * @param cell the number of the cell
      * @return true if the cell is currently unoccupied
      */
-    public boolean isFree(this.row, this.column) {
-        return (board[row][column].isEmpty() == true);
+    public boolean isCellFree() {
+        return (board[row][column].isEmpty());
     }
-
-}
-/*
-            do {
-                System.out.print("Where do you want to play? ");
-                cell = input.nextInt();
-                if ((cell < 1) || (cell > 9))
-                    System.out.println("Invalid cell number.");
-                else if (!board.isFree(cell))
-                    System.out.println("That cell is not free.");
-            } while ((cell < 1) || (cell > 9) || !board.isFree(cell));
-    
-*/
-    
-    /**
-     * Handle user input (regardless of upper or lower case)
-     * Own method or add to existing - input class?
-     */
-
-
 
     /**
      * Auxiliary method that makes a move according to player's input
      */
-    private void move(int row, int column, int value) {  
+    private void move(int value) {  
         board[row][column].setValue(value);
         board[row][column].setIsEmpty(false);
     }
@@ -170,8 +138,8 @@ public class Game {
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {    
                 if(charArray[i][j] == index) {
-                    this.row = i;
-                    this.column = j;   
+                    row = i;
+                    column = j;   
                 }                     
             }
         }          
@@ -182,11 +150,10 @@ public class Game {
      */
     private String cellToString(int row, int col) {
         if(board[row][col].isEmpty() == false) {
-            return " "+board[row][col].value()+" ";
+            return " "+" "+board[row][col].value()+" "+" ";
         } else {
-            return " "+charArray[row][col]+" ";
-        } 
-       
+            return " "+" "+charArray[row][col]+" "+" ";
+        }       
     }
 
     /**
@@ -194,6 +161,7 @@ public class Game {
      * @return a textual representation of this board
      */
     public String toString() {
+        System.out.println();
         String result = "";
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -204,11 +172,14 @@ public class Game {
                     result = result + "\n";
             }
             if (i < 2)
-                result = result + "---+---+---\n";
+                result = result + "-----+-----+-----\n";
         }
         return result;
     } 
 
+
+// TO DO: CHECK IF ALL CELLS ARE FULL, RIGHT NOW GAME ENDS IF SUM = 15, 
+// BUT NOT ALL CELLS ARE FILLED.
     /**
      * Sum diagonals to check for sum of 15
      */
@@ -249,13 +220,11 @@ public class Game {
                     if(sumRow == 15) {
                         winFound = true;
                     }   
-                }  
-                
+                } 
             }
         }
         return (winFound ? 15 : 0);
     }
-
 
     /**
      * Sum columns to check for sum of 15
@@ -292,7 +261,7 @@ public class Game {
     }
  
     /**
-     * Check if game is finished
+     * Check if game is a draw
      */
     public void draw() {
         int countEmpty = 0;

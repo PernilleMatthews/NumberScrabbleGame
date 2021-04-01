@@ -4,6 +4,7 @@ import java.util.Scanner;
  */
 public class InputManager {
     private Scanner keyboard = new Scanner(System.in);
+    private String[] sArray;
 
     /**
      * Constructor
@@ -38,29 +39,44 @@ public class InputManager {
      * @param   
      * @return a uppercase string read from input
      */
-    public String stringMoveInput(String prompt) {  
-        String moveString;
-        do {            
+    public String[] stringMoveInput(String prompt) { 
+        boolean validInput = false;
+        do {
             System.out.print(prompt);
+            String moveString;
             moveString = keyboard.nextLine().toUpperCase().trim();
-            if(moveString.length() !=  2) {
-                System.out.println("Please insert a correct value. Try again.");
+            this.sArray = moveString.split("");
+
+            if (moveString.length() !=  2 && !validatePosition(this.sArray) && !validateNumber(this.sArray)) {
+                System.out.println("Please insert a correct value.");
+            } else {
+                validInput = true;
             }
-        } while (moveString.length() != 2);       
-        return moveString;
+        } while(!validInput);
+
+        return this.sArray;
     } 
 
-    /**
-     * User input validation
-     * Input = two characters
-     * Input is uppercase
-     * Input contains 1 letter & 1 number
+// Work on these two validation methods, they don't work as intended entirely...:thinking:
+    /*
+     * Get user input for move e.g., "A1"
+     * @param   
+     * @return a uppercase string read from input
      */
-    private String validateInput(String validateInput) {
-        //String validatedInput;
-        //TODO
-        return "TODO";
-    }
+    public boolean validatePosition(String[] letterPosition) {
+        return ((letterPosition[0].charAt(0) >= 65 && letterPosition[0].charAt(0) <= 74) ? true : false);
+    } 
+
+    /*
+     * Get user input for move e.g., "A1"
+     * @param   
+     * @return a uppercase string read from input
+     */
+    public boolean validateNumber(String[] number) {
+        int value = Integer.parseInt(String.valueOf(number[1]));
+        return ((value >= 1 && value <= 9) ? true : false);
+    } 
+
 
     /**
   //encapsulated code for user input validation
