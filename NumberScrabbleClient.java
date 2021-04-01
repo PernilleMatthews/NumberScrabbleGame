@@ -24,10 +24,12 @@ public class NumberScrabbleClient {
         System.out.println("Select a game mode");
         System.out.println("Press 1 for Player vs Player");
         System.out.println("Press 2 for Player vs Computer");
-
-        //do {
-        gameMode = inputManager.intInput("Your choice: ");
-        //} while(gameMode != 1 || gameMode != 2);
+        do {
+            gameMode = inputManager.intInput("Your choice: ");
+            if((gameMode != 1) && (gameMode != 2)) {
+                System.out.println("Please insert a correct value. Try again.");
+            }
+        } while((gameMode != 1) && (gameMode != 2));
 
         // Initialise the players array      
         players = new Player[2];
@@ -37,7 +39,7 @@ public class NumberScrabbleClient {
             System.out.println("You have selected Player vs Player.");
 
             // Player 1 creation
-            inputManager.stringInput(""); // Flush.
+            inputManager.stringInput(""); // Flush
             String player1 = inputManager.stringInput("Who is player 1? ");
             players[0] = new Player(1, player1);
             
@@ -46,8 +48,7 @@ public class NumberScrabbleClient {
             players[1] = new Player(1, player2);
             
         } else {
-            // TODO:
-            // To do later....first player vs player             
+            // TODO: later....first player vs player             
             System.out.println("You have selected Player vs Computer.");
             String player1 = inputManager.stringInput("Who is player 1? ");
             System.out.println();
@@ -56,7 +57,6 @@ public class NumberScrabbleClient {
             players[1] = new Player(2);            
         }    
     }
-
 
     /**
      * Main program.

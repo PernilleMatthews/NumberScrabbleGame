@@ -53,7 +53,7 @@ public class InputManager {
     /**
      * User input validation
      * Input = two characters
-     * Input is uppcase
+     * Input is uppercase
      * Input contains 1 letter & 1 number
      */
     private String validateInput(String validateInput) {

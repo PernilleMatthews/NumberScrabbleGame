@@ -87,9 +87,9 @@ public class Game {
         //Scanner input = new Scanner(System.in); // Should this be here??
         turn = true;
 
-        String cell;
-        int value;
-        char index;
+        
+        
+        //char index;
         while(turn) {
             // Check if game should be fished
             //
@@ -99,7 +99,7 @@ public class Game {
 
             // Print out possible moves (Array of letters.)
 
-
+            String cell;
             cell = input.stringMoveInput("Where do you want to play?: ");       
             String[] sArray = cell.split("");  
             System.out.println();
@@ -109,9 +109,11 @@ public class Game {
             letterPosition(s.charAt(0));
      
             // Convert given value of input from String to Integer
+            int value;
             value = Integer.parseInt(String.valueOf(sArray[1]));
 
             // Perform the move
+            if()
             move(this.row, this.column, value);
             checkBoardState();
 
@@ -119,13 +121,43 @@ public class Game {
             turn = false;
         }
     }
+
+       /**
+     * Checks whether a given cell is free.<br>
+     * <b>Precondition:</b> 1&le;cell&le;9.
+     * @param cell the number of the cell
+     * @return true if the cell is currently unoccupied
+     */
+    public boolean isFree(int cell) {
+        return (board[(cell-1)/3][(cell-1)%3] == isEmpty());
+    }
+
+}
+
+            do {
+                System.out.print("Where do you want to play? ");
+                cell = input.nextInt();
+                if ((cell < 1) || (cell > 9))
+                    System.out.println("Invalid cell number.");
+                else if (!board.isFree(cell))
+                    System.out.println("That cell is not free.");
+            } while ((cell < 1) || (cell > 9) || !board.isFree(cell));
     
+
+    
+    /**
+     * Handle user input (regardless of upper or lower case)
+     * Own method or add to existing - input class?
+     */
+
+
+
     /**
      * Auxiliary method that makes a move according to player's input
      */
-    private void move(int row, int index, int value) {  
-        board[row][index].setValue(value);
-        board[row][index].setIsEmpty(false);
+    private void move(int row, int column, int value) {  
+        board[row][column].setValue(value);
+        board[row][column].setIsEmpty(false);
     }
 
     /**

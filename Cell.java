@@ -42,19 +42,5 @@ public class Cell {
         return this.value;
     }
 
-    /**
-     * Handle user input (regardless of upper or lower case)
-     * Own method or add to existing - input class?
-     */
-    
-
-    /*
-    * Something to print the "available numbers" to the users
-    * will help them stay on top of their choices.
-    * Move Input
-    */
-    public void possibleMoves() {
-        
-    }
 
 }
