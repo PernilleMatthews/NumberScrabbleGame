@@ -2,19 +2,17 @@
 * Class that represents a single cell of the whole board
 */
 
-public class Cell {
-    /**
-     * Class attributes
-     */
-    private boolean isEmpty;
+public class Cell {    
     private int value;
-    
-    public Cell() {
-        this.isEmpty = true;
-        this.value = -1;
+    private String letter;
+
+    public Cell(String letter) {
+        this.letter = letter;
+        this.value = 0;
     }
 
     /**
+     * Precondition: Value is an int between 1-9.
      * Set the content of a cell
      */
     public void setValue(int newValue) {
@@ -22,25 +20,28 @@ public class Cell {
     }
 
     /**
-     * Set the empty value of a cell
-     */
-    public void setIsEmpty(boolean newState) {
-        this.isEmpty = newState;
-    }
-
-    /**
      * Return the empty value of a cell
      */
     public boolean isEmpty() {
-        return this.isEmpty;
+        return this.value == 0;
     }
 
-    /**
+    /**     
      * Returns content of cell
      */
     public int value() {
         return this.value;
     }
 
-
+    /**
+     * Returns a textual representation of this cell.
+     * @return a textual representation of this cell
+     */
+    public String toString() {
+        if(isEmpty() == false) {
+            return Integer.toString(value());
+        } else {
+            return letter;
+        }
+    }
 }

@@ -3,7 +3,7 @@
 
 
 ### Design choices
-- The available positions and numbers are not printed. This has been chosen in order to increase the difficulty of the game. Handling of incorrect input has been created. 
+- The available positions and numbers are not printed, only the board and the updates that occur per turn. This has been chosen in order to increase the difficulty of the game. Handling of incorrect input has been created. 
 
 
 ### Game

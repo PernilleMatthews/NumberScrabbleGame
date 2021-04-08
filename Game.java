@@ -1,68 +1,58 @@
 import java.util.Arrays;
 /**
  * Class description. This class holds the state of the game and....
+ * Includes: Creating a board-object and other objects, prompts the user for input,
+ * parses the input and calls methods on board to update board state, 
+ * shows board after each turn, stops the game once finished. 
  */
 
 public class Game {
-    /**
-     * Class attributes.
-     */
-    public boolean gameIsFinished;  
-    
-    private char[][] charArray = new char[3][3];
-    private Cell[] grid = new Cell[9]; // Is this needed?
-    public Cell[][] board;
-        
-    private static boolean turn;  
+    //public Cell[][] board; 
+    private Board board; 
+    private static boolean turn;    
     private InputManager input;
+    private Player[] players;
     private int row, column;
-
+    
     /**
      * Constructor that creates an empty board.
      */
-    public Game(InputManager inputManager) {
-        this.input = inputManager;
-        this.gameIsFinished = false;        
-        createNewBoard();       
+    public Game(InputManager inputManager, Player[] players) {
+        this.input = inputManager;     
+        this.players = players;        
+        board = new Board();
     }
 
-    /**
-     * Creates a new 3x3 empty board 
-     */
-    private void createNewBoard() {
-        // Create a 1D array of new cells (CAn this be integrated in 2xfor?) 
-        for(int i = 0; i < 9; i++) {
-            grid[i] = new Cell();
+    public void play() {
+        // Print initial board        
+        System.out.println("Current board state.");
+        System.out.println();
+        System.out.println(board);
+            
+        while(!board.gameIsFinished) {
+            for(Player player : players){
+                System.out.println("It is " + player.name() + "'s turn.");
+                turn();
+                System.out.println();
+                System.out.println(board);                
+
+                if(board.gameIsFinished){
+                    // TODO: change message if draw "no winner"
+                    
+                    System.out.println("The game has ended.");
+                    System.out.println("Congratulations to the winner: " + player.name());
+                    break; 
+                }
+            }           
         }
-        createCharArray();        
-        this.board = new Cell[3][3];
-
-        // Create board with cells and the letters from the charArray
-        for (int i = 0; i < 3; i++) {          
-            for (int j = 0; j < 3; j++) {
-               this.board[i][j] = this.grid[i * 3 + j];
-            }
-        }    
-    }
-
-    /**
-     * Create letter array and insert A-I into array
-     */
-    private void createCharArray() {
-        int letter = 65;
-
-        for (int i = 0; i < 3; i++) {          
-            for (int j = 0; j < 3; j++) {
-                charArray[i][j] = (char)letter;
-                letter++;
-            }
-        }
+        //inputManager.closeInput(); 
     }
 
     /**
      * Prompt player for their move. 
      */
     public void turn() {
+        
         turn = true;
 
         //char index;
@@ -83,13 +73,13 @@ public class Game {
                 value = Integer.parseInt(String.valueOf(sArray[1]));
 
                 // Check conditions for input
-                if (isNumberUsed(value)) {
+                if (board.isNumberUsed(value)) {
                     System.out.println("That number has already been used.");
-                } else if (!isCellFree()){
+                } else if (!board.isCellFree(row, column)){
                     System.out.println("That cell is not available.");
                 } else {
-                    move(value);
-                    checkBoardState();
+                    board.move(row, column, value);
+                    board.checkBoardState();
 
                     // Change player - turn is over!
                     turn = false;
@@ -99,183 +89,14 @@ public class Game {
     }
 
     /**
-     * Returns if number has already been used or not. 
-     */
-    public boolean isNumberUsed(int value) {
-        boolean isCellValueEqual = false;
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) { 
-                if (board[i][j].value() == value) {
-                    isCellValueEqual = true;
-                }
-            }
-        }
-        return isCellValueEqual;
-    }
-
-    /**
-     * Checks whether a given cell is free.<br>
-     * <b>Precondition:</b> 1&le;cell&le;9.
-     * @param cell the number of the cell
-     * @return true if the cell is currently unoccupied
-     */
-    public boolean isCellFree() {
-        return (board[row][column].isEmpty());
-    }
-
-    /**
-     * Auxiliary method that makes a move according to player's input
-     */
-    private void move(int value) {  
-        board[row][column].setValue(value);
-        board[row][column].setIsEmpty(false);
-    }
-
-    /**
-     * Convert the letter into the row & col position on board
-     */    
-    private void letterPosition(char index) {   
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {    
-                if(charArray[i][j] == index) {
-                    row = i;
-                    column = j;   
-                }                     
-            }
-        }          
-    }
-
-    /**
-     * Auxiliary method for printing a cell.
-     */
-    private String cellToString(int row, int col) {
-        if(board[row][col].isEmpty() == false) {
-            return " "+" "+board[row][col].value()+" "+" ";
-        } else {
-            return " "+" "+charArray[row][col]+" "+" ";
-        }       
-    }
-
-    /**
-     * Returns a textual representation of this board.
-     * @return a textual representation of this board
-     */
-    public String toString() {
-        System.out.println();
-        String result = "";
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                result = result + cellToString(i, j);
-                if (j < 2)
-                    result = result + "|";
-                else
-                    result = result + "\n";
-            }
-            if (i < 2)
-                result = result + "-----+-----+-----\n";
-        }
-        return result;
+     * Return index based on letter input on board
+    */
+    private void letterPosition(char letter) {
+        System.out.println(letter);
+        int index = letter - 65;               
+        this.column = index % 3;
+        this.row = index / 3;
+        System.out.println(column);
+        System.out.println(row);
     } 
-
-
-// TO DO: CHECK IF ALL CELLS ARE FULL, RIGHT NOW GAME ENDS IF SUM = 15, 
-// BUT NOT ALL CELLS ARE FILLED.
-    /**
-     * Sum diagonals to check for sum of 15
-     */
-    private int sumDiagonals() {
-        int sumLeftDiagonal = 0;
-        int sumRightDiagonal = 0;
-        int counter = 3;
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {
-
-                // Add value to left diagonal sum
-                if((board[i][j].isEmpty() == false) && (i==j)) {
-                    sumLeftDiagonal = sumLeftDiagonal + board[i][j].value();
-                }
-
-                // Add value to right diagonal sum
-                if((board[i][j].isEmpty() == false) && (i + j) == (3 - 1)) {
-                    sumRightDiagonal = sumRightDiagonal + board[i][j].value();
-                }   
-            }
-        }        
-        return ((sumLeftDiagonal == 15 || sumRightDiagonal == 15) ? 15 : 0);
-    }
-
-    /**
-     * Sum rows to check for sum of 15
-     * This method is super messy, need to rethink how to exit loop if 15 = true.
-     */
-    private int sumRows() {
-        int sumRow = 0;
-        boolean winFound = false;
-        for(int i = 0; i < 3; i++) {
-                sumRow = 0;              
-            for(int j = 0; j < 3; j++) { 
-                if(board[i][j].isEmpty() == false) {
-                    sumRow = sumRow + board[i][j].value();
-
-                    if(sumRow == 15) {
-                        winFound = true;
-                    }   
-                } 
-            }
-        }
-        return (winFound ? 15 : 0);
-    }
-
-    /**
-     * Sum columns to check for sum of 15
-     * This method and the sumRows can be together, but would that be messy?
-     * Keep them separate for now, seems much cleaner, consider remaking these two.
-     */
-    private int sumColumns() {
-        int sumCol = 0;
-        boolean winFound = false;
-        for(int i = 0; i < 3; i++) {
-                sumCol = 0;              
-            for(int j = 0; j < 3; j++) { 
-                if(board[i][j].isEmpty() == false) {
-                    sumCol = sumCol + board[j][i].value();
-
-                    if(sumCol == 15) {
-                        winFound = true;
-                    }   
-                }  
-            }
-        }
-        return (winFound ? 15 : 0);
-    }
-
-    /**
-     * Check for win or draw
-     */
-    public void checkBoardState() {
-        draw();
-
-        if(sumDiagonals() == 15 || sumRows() == 15 || sumColumns() == 15) {
-            gameIsFinished = true;
-        }
-    }
- 
-    /**
-     * Check if game is a draw
-     */
-    public void draw() {
-        int countEmpty = 0;
-        for(int i = 0; i < 3; i++) {            
-            for(int j = 0; j < 3; j++) {
-                if((board[i][j].isEmpty() == false) && !gameIsFinished) {
-                    countEmpty++;
-
-                    if(countEmpty == 9) {
-                        System.out.println("It is a draw!");
-                        gameIsFinished = true;
-                    }
-                }        
-            }
-        }
-    }  
 }
