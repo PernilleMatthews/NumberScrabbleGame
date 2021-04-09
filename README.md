@@ -2,7 +2,7 @@
 This project is a 1-on-1 Number Scrabble game written in Java, using OOP.
 - Objective of the game is 
 
-## See rules: [rules](https://en.wikipedia.org/wiki/Number_Scrabble)
+## Read more: [Number Scrabble](https://en.wikipedia.org/wiki/Number_Scrabble)
 
 
 ### Design choices
