@@ -12,3 +12,17 @@
 - There is only 1 option, to play vs another player. 
   Next step is:
    - [ ] implementation of computer vs player. 
+
+### Program details
+1. NumberScrabbleClient.java
+   - Description
+3. InputManager.java
+   - Description
+5. Game.java
+  - Description
+7. Board.java
+  - Description
+9. Cell.java
+  - Description
+11. Player.java
+    - Description
