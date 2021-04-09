@@ -11,7 +11,7 @@
 - The sum of the rows, cols and diagonals must sum 15 in order to win.
 - There is only 1 option, to play vs another player. 
   Next step is:
-   - [ ] implementation of computer vs player. 
+   - [ ] implementation of computer(AI) vs player. 
 
 ### Program details
 1. NumberScrabbleClient.java
