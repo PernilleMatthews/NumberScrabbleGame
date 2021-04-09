@@ -19,10 +19,10 @@
 3. InputManager.java
    - Description
 5. Game.java
-  - Description
+   - Description
 7. Board.java
-  - Description
+   - Description
 9. Cell.java
   - Description
 11. Player.java
-    - Description
+   - Description
