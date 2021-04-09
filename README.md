@@ -23,6 +23,6 @@
 7. Board.java
    - Description
 9. Cell.java
-  - Description
+   - Description
 11. Player.java
    - Description
