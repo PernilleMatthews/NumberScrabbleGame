@@ -99,22 +99,25 @@ public class Board {
     private int sumDiagonals() {
         int sumLeftDiagonal = 0;
         int sumRightDiagonal = 0;
-        int counter = 3;
+        int cellsFilledLeft = 0;
+        int cellsFilledRight = 0;
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
 
                 // Add value to left diagonal sum
                 if((grid[i][j].isEmpty() == false) && (i==j)) {
                     sumLeftDiagonal = sumLeftDiagonal + grid[i][j].value();
+                    cellsFilledLeft++;
                 }
 
                 // Add value to right diagonal sum
                 if((grid[i][j].isEmpty() == false) && (i + j) == (3 - 1)) {
                     sumRightDiagonal = sumRightDiagonal + grid[i][j].value();
+                    cellsFilledRight++;
                 }   
             }
         }        
-        return ((sumLeftDiagonal == 15 || sumRightDiagonal == 15) ? 15 : 0);
+        return (((sumLeftDiagonal == 15 && cellsFilledLeft == 3) || (sumRightDiagonal == 15  && cellsFilledRight == 3)) ? 15 : 0);
     }
 
     // ISSUE WITH DIAGONALS! If e.g., 9+6, then the game ends regardless if all three cells are filled out or not. 
@@ -126,14 +129,17 @@ public class Board {
      */
     private int sumRows() {
         int sumRow = 0;
+        int cellsFilled = 0;
         boolean winFound = false;
         for(int i = 0; i < 3; i++) {
-                sumRow = 0;              
+                sumRow = 0;   
+                cellsFilled = 0;     
             for(int j = 0; j < 3; j++) { 
                 if(grid[i][j].isEmpty() == false) {
                     sumRow = sumRow + grid[i][j].value();
+                    cellsFilled++;
 
-                    if(sumRow == 15) {
+                    if(sumRow == 15 && cellsFilled == 3) {
                         winFound = true;
                     }   
                 } 
@@ -143,22 +149,24 @@ public class Board {
     }
 
     /**
-     * Sum columns to check for sum of 15
-     * This method and the sumRows can be together, but would that be messy?
-     * Keep them separate for now, seems much cleaner, consider remaking these two.
+     * Sum columns to check for sum of 15 using <i>exactly</i> 3 numbers
+     * This method and the sumRows can be together, LOTS OF REDUNDANT CODE :()
+     * Keep them separate for now, consider to merge in the future.
      */
     private int sumColumns() {
         int sumCol = 0;
+        int cellsFilled = 0;
         boolean winFound = false;
         for(int i = 0; i < 3; i++) {
-                sumCol = 0;              
+                sumCol = 0; 
+                cellsFilled = 0;              
             for(int j = 0; j < 3; j++) { 
                 if(grid[j][i].isEmpty() == false) {
                     sumCol = sumCol + grid[j][i].value();
-
-                    if(sumCol == 15) {
+                    cellsFilled++;
+                    if(sumCol == 15 && cellsFilled == 3) {
                         winFound = true;
-                    }   
+                    }                                      
                 }  
             }
         }

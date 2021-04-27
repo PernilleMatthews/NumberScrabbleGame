@@ -28,9 +28,13 @@ public class Game {
         System.out.println();
         System.out.println(board);
 
-
         while(!board.gameIsFinished) {
             for(Player player : players){
+                System.out.println("It is " + player.name() + "'s turn."); 
+                turn();
+                System.out.println();
+                System.out.println(board);
+                
                 if(board.gameIsFinished){
                     System.out.println("The game has ended.");  
 
@@ -42,10 +46,7 @@ public class Game {
                     break;
                 }
 
-                 System.out.println("It is " + player.name() + "'s turn."); 
-                turn();
-                System.out.println();
-                System.out.println(board);
+             
             }       
         }
         //inputManager.closeInput();
