@@ -7,55 +7,56 @@ import java.util.Arrays;
  */
 
 public class Game {
-    //public Cell[][] board; 
-    private Board board; 
-    private static boolean turn;    
-    private InputManager input;
-    private Player[] players;
+    private Board board;
     private int row, column;
-    
+    private Player[] players;
+    private InputManager input;
+    private static boolean turn;
+
     /**
      * Constructor that creates an empty board.
      */
     public Game(InputManager inputManager, Player[] players) {
-        this.input = inputManager;     
-        this.players = players;        
+        this.input = inputManager;
+        this.players = players;
         board = new Board();
     }
 
     public void play() {
-        // Print initial board        
+        // Print initial board
         System.out.println("Current board state.");
         System.out.println();
         System.out.println(board);
-            
+
+
         while(!board.gameIsFinished) {
             for(Player player : players){
-                System.out.println("It is " + player.name() + "'s turn.");
+                if(board.gameIsFinished){
+                    System.out.println("The game has ended.");  
+
+                    if(board.draw) {
+                        System.out.println("It is a draw!"); 
+                    } else {
+                          System.out.println("Congratulations to the winner: " + player.name());
+                    }                                  
+                    break;
+                }
+
+                 System.out.println("It is " + player.name() + "'s turn."); 
                 turn();
                 System.out.println();
-                System.out.println(board);                
-
-                if(board.gameIsFinished){
-                    // TODO: change message if draw "no winner"
-                    
-                    System.out.println("The game has ended.");
-                    System.out.println("Congratulations to the winner: " + player.name());
-                    break; 
-                }
-            }           
+                System.out.println(board);
+            }       
         }
-        //inputManager.closeInput(); 
+        //inputManager.closeInput();
     }
 
     /**
      * Prompt player for their move. 
      */
-    public void turn() {
-        
+    public void turn() {        
         turn = true;
 
-        //char index;
         while(turn) {                
             String position;
             String number;
@@ -88,15 +89,14 @@ public class Game {
         } 
     }
 
+
+
     /**
      * Return index based on letter input on board
     */
     private void letterPosition(char letter) {
-        System.out.println(letter);
         int index = letter - 65;               
         this.column = index % 3;
         this.row = index / 3;
-        System.out.println(column);
-        System.out.println(row);
     } 
 }
