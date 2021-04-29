@@ -199,8 +199,8 @@ public class Board {
     } 
 
     /*
-    * Check winning conditions
-    */
+     * Check winning conditions
+     */
     private void winningConditions() {
         if(sumDiagonals() == 15 || sumRows() == 15 || sumColumns() == 15) {            
             gameIsFinished = true;
