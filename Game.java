@@ -1,6 +1,6 @@
 import java.util.Arrays;
 /**
- * Class description. This class holds the state of the game and....
+ * Class that runs the game and uses Board class to check state depending on user input.
  * Includes: Creating a board-object and other objects, prompts the user for input,
  * parses the input and calls methods on board to update board state, 
  * shows board after each turn, stops the game once finished. 
@@ -44,9 +44,7 @@ public class Game {
                           System.out.println("Congratulations to the winner: " + player.name());
                     }                                  
                     break;
-                }
-
-             
+                }             
             }       
         }
         //inputManager.closeInput();
@@ -90,14 +88,12 @@ public class Game {
         } 
     }
 
-
-
     /**
      * Return index based on letter input on board
-    */
+     */
     private void letterPosition(char letter) {
         int index = letter - 65;               
         this.column = index % 3;
         this.row = index / 3;
-    } 
+    }
 }
