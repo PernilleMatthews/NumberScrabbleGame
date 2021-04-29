@@ -1,6 +1,6 @@
 # Number Scrabble Game
 This project is a 1-on-1 Number Scrabble game written in Java, using OOP.
-- Objective of the game is 
+- Objective of the game is....
 
 ## Read more: [Number Scrabble](https://en.wikipedia.org/wiki/Number_Scrabble)
 
@@ -14,7 +14,7 @@ This project is a 1-on-1 Number Scrabble game written in Java, using OOP.
 - The sum of the rows, cols and diagonals must sum 15 in order to win.
 - There is only 1 option, to play vs another player. 
   Next step is:
-   - [ ] implementation of computer(AI) vs player. 
+   - [ ] implementation of computer(AI) vs player. (Using Minimax?)
 
 ### Program details
 1. NumberScrabbleClient.java
