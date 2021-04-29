@@ -1,15 +1,21 @@
 import java.util.Arrays;
 
 /**
-* Class description.
-*
+* Client class that prompts for game setup and creates a
+* new game based on the given setup. 
 */
 public class NumberScrabbleClient {
     private static Game game;
     private static int gameMode;
-    //private static Player[] players;
     private static InputManager inputManager = new InputManager();
 
+    /**
+     * Main program.
+     */
+    public static void main(String[] args) {
+        init();
+        game.play();
+    }
 
     /**
      * Initialisation.
@@ -51,17 +57,7 @@ public class NumberScrabbleClient {
             
             players[0] = new Player(2, player1);
             players[1] = new Player(2);            
-        }   
-        // Create tha game!
-        game = new Game(inputManager, players);
-         
-    }
-
-    /**
-     * Main program.
-     */
-    public static void main(String[] args) {
-        init(); 
-        game.play();        
+        }        
+        game = new Game(inputManager, players);         
     }
 }

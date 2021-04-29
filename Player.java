@@ -1,8 +1,8 @@
 /**
- * Description -- class for player and np
+ * Class for creating a player for the game
  * Two types of players:
  *       Player: A Player can have a name
- *       Computer: A Computer is not given a name
+ *       Computer: A Computer is not given a name (IN RPOGRESS)
  */
 
 public class Player {
