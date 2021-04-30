@@ -1,5 +1,5 @@
 /*
-* Description -- Class for creating a board for the Game
+* Class for creating a board for the Game and provides state of board for the game.
 * Includes: Current position on board, methods for sum of rows/cols/diagonals,
 * methods for checking if player has won or draw, methods to update board.
 */
@@ -120,9 +120,6 @@ public class Board {
         return (((sumLeftDiagonal == 15 && cellsFilledLeft == 3) || (sumRightDiagonal == 15  && cellsFilledRight == 3)) ? 15 : 0);
     }
 
-    // ISSUE WITH DIAGONALS! If e.g., 9+6, then the game ends regardless if all three cells are filled out or not. 
-    // EXACTLY THREE NUMBERS MUST ADD UP TO 15, not just two.
-
     /**
      * Sum rows to check for sum of 15
      * This method is super messy, need to rethink how to exit loop if 15 = true.
@@ -202,8 +199,8 @@ public class Board {
     } 
 
     /*
-    * Check winning conditions
-    */
+     * Check winning conditions
+     */
     private void winningConditions() {
         if(sumDiagonals() == 15 || sumRows() == 15 || sumColumns() == 15) {            
             gameIsFinished = true;

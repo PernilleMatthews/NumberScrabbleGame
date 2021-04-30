@@ -1,5 +1,6 @@
 /**
-* Class that represents a single cell of the whole board
+* Class that represents a single cell of the whole board.
+* Each cell hold a value and a letter value for representation.
 */
 
 public class Cell {    
