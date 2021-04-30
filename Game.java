@@ -78,7 +78,7 @@ public class Game {
                 if (board.isNumberUsed(value)) {
                     System.out.println("That number has already been used.");
                 } else if (!board.isCellFree(row, column)){
-                    System.out.println("That cell is not available.");
+                    System.out.println("That cell is not available. :( ");
                 } else {
                     board.move(row, column, value);
                     board.checkBoardState();
